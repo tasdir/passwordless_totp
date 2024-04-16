@@ -8,20 +8,11 @@ app = Flask(__name__)
 
 # Dummy user data (username, password, and OTP)
 users = {
-    "user1": {"password": "password1", "otp": "123456"},
-    "user2": {"password": "password2", "otp": "654321"}
+    "user1",
+    "user2"
 }
 
-# Function to generate a random OTP
-def get_otp():
 
-    return str(random.randint(100000, 999999))
-
-# Function to check if username and password are valid
-def authenticate_user(username, password):
-    if username in users and users[username]["password"] == password:
-        return True
-    return False
 
 # Function to check if OTP is valid
 def authenticate_otp(username, otp):
@@ -52,10 +43,9 @@ def index():
 @app.route('/login', methods=['POST'])
 def login():
     username = request.form['username']
-    password = request.form['password']
     otp = request.form['otp']
 
-    if authenticate_user(username, password) and authenticate_otp(username, otp):
+    if authenticate_otp(username, otp):
         return redirect(url_for('dashboard'))
     else:
         return render_template('login.html', message='Invalid username, password, or OTP')
